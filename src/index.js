@@ -1,29 +1,49 @@
-const db = require('./db/models');
+const db = require("./db/models");
 
 // Promise / Chaining
 function getTasks() {
   db.Task.findAll()
-    .then((tasks) => {
-      tasks.forEach((task) => {
+    .then(tasks => {
+      tasks.forEach(task => {
         console.log(task.taskName);
       });
     })
-    .catch((err) => {
+    .catch(err => {
       console.log(err);
     });
 }
 
 // Async Await
-async function printTasks()  {
+async function printTasks() {
   try {
     const tasks = await db.Task.findAll();
-    tasks.forEach((task) => {
+    tasks.forEach(task => {
       console.log(task.taskName);
     });
   } catch (err) {
     console.log(err);
   }
-};
+}
 
-getTasks();
-printTasks();
+async function createUSer(name) { // String
+  const user = await db.User.create({ name });
+
+  return user
+}
+
+async function getUSer(name) {  //String
+  const user = await db.User.findOne({ where: { name } });
+
+  return user
+}
+
+async function assignTaskToUser(task, user) { // Task Object // user = String || object || int
+  await task.setUser(user)
+}
+
+async function listAllUserTaks(user) { // user object
+  tasks = await user.getTasks()
+  tasks.forEach((task) => {
+    console.log(task.taskName)
+  })
+}

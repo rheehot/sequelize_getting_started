@@ -12,6 +12,7 @@ module.exports = {
   },
   production: {
     use_env_variable: 'DB_CONNECTION_STRING',
-    dialect: 'postgres'
+    dialect: 'postgres',
+    logging: false
   }
 };
